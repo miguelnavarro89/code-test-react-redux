@@ -1,20 +1,25 @@
+import { Container } from '@material-ui/core';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Header from './header';
+
+const Home = () => '[home...]'
+const AddMovie = () => '[add movie...]'
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Container>
+        <Header />
+        <Switch>
+          <Route path='/add'>
+            <AddMovie />
+          </Route>
+          <Route path='/'>
+            <Home />
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
   );
 }
 
