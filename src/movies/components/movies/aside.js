@@ -15,8 +15,8 @@ function Aside() {
         <div>
             <h2>Latest movies</h2>
             <ul>
-                {movies.map(({ title, release }) => (
-                    <li>
+                {movies.map(({ title, release, slug }) => (
+                    <li key={slug}>
                         <h3>{title}</h3>
                         <span>{release}</span>
                         <button onClick={onDelete(title)}>Delete</button>
