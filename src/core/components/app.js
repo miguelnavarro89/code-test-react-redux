@@ -1,9 +1,7 @@
 import { Container } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { Movies } from '../../movies';
+import { AddMovie, Movies } from '../../movies';
 import Header from './header';
-
-const AddMovie = () => '[add movie...]'
 
 function App() {
   return (
