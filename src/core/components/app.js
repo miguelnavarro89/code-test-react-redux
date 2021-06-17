@@ -1,8 +1,8 @@
 import { Container } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Movies } from '../../movies';
 import Header from './header';
 
-const Home = () => '[home...]'
 const AddMovie = () => '[add movie...]'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
             <AddMovie />
           </Route>
           <Route path='/'>
-            <Home />
+            <Movies />
           </Route>
         </Switch>
       </Container>
