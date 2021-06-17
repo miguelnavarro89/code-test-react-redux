@@ -54,6 +54,12 @@ const { reducer, actions } = createSlice({
     name: 'movies',
     initialState,
     reducers: {
+        add: (state, { payload }) => {
+            state.entities.push({
+                ...payload,
+                slug: makeSlug(payload.title)
+            })
+        },
         delete: (state, { payload }) => {
             const newEntities = state.entities.filter(
                 propSatisfies(
@@ -62,7 +68,7 @@ const { reducer, actions } = createSlice({
                 )
             )
             state.entities = newEntities
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

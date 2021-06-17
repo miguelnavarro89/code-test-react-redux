@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import { values as objValues, complement, isEmpty, propSatisfies, equals } from 'ramda'
+import { values as objValues, propSatisfies, equals } from 'ramda'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -60,16 +60,18 @@ function AddMovie() {
                         }
                         return ''
                     })()
-                    const r = { ...errors, [key]: message }
-                    return r
+                    return { ...errors, ...(message ? { [key]: message } : {}) }
                 }, {})
             }}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 if (!isValidImagePreview) {
                     return setSubmitting(false)
                 }
                 
                 dispatch(actions.add(values))
+                resetForm()
+                setSubmitting(false)
+                alert(`New movie added: ${values.title}`)
             }}
         >
             {({
@@ -78,10 +80,11 @@ function AddMovie() {
                 touched,
                 handleChange,
                 handleBlur,
-                handleSubmit,
                 isSubmitting,
             }) => {
-                const anyError = objValues(errors).filter(complement(isEmpty))
+                const anyError = objValues(errors).length
+                const anyTouched = objValues(touched).length
+                const submitIsDisabled = isSubmitting || anyError || !anyTouched
 
                 return (
                     <Form>
@@ -114,7 +117,7 @@ function AddMovie() {
                             <span>Remaining: {300 - values.description.length} chars.</span>
                             <ErrorMessage name='description' component='div' />
                         </div>
-                        <button type='submit' disabled={isSubmitting || anyError.length}>Save</button>
+                        <button type='submit' disabled={submitIsDisabled}>Save</button>
                         <Link to='/'><button tabIndex='-1' role='none'>Cancel</button></Link>
                     </Form>
                 )
