@@ -14,7 +14,7 @@ function App() {
           <Route path='/add'>
             <AddMovie />
           </Route>
-          <Route path='/'>
+          <Route path={['/:id', '/']}>
             <Movies />
           </Route>
         </Switch>

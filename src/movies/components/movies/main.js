@@ -1,31 +1,33 @@
 import { equals, propSatisfies } from "ramda";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { selectMovies } from "../../slice";
 
 function Main() {
-    const location = useLocation()
+    const { params } = useRouteMatch()
     const history = useHistory()
     const movies = useSelector(selectMovies)
-    const [movie, setMovie] = useState(movies[0] || {})
+    const [movie, setMovie] = useState(movies[0])
 
     useEffect(() => {
-        if (location.pathname) {
-            const selectedMovie = movies.find(
-                propSatisfies(
-                    equals(encodeURI(location.pathname.slice(1))),
-                    'slug'
-                )
+        const targetMovie = movies.find(
+            propSatisfies(
+                equals(encodeURI(params.id)),
+                'slug'
             )
-            if (selectedMovie) {
-                setMovie(selectedMovie)
-            } else {
-                history.push('/')
-                setMovie(movies[0])
+        )
+        if (targetMovie) {
+            // another movie was requested
+            if (movie !== targetMovie) {
+                setMovie(targetMovie)
             }
+        // movie was deleted
+        } else if (movie !== movies[0]) {
+            history.push('/')
+            setMovie(movies[0])
         }
-    }, [movies, location.pathname, history])
+    }, [movie, movies, params, history])
 
     if (!movies.length) {
         return 'There are no movies yet.'
