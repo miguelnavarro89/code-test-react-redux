@@ -1,11 +1,12 @@
 import { equals, propSatisfies } from "ramda";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { selectMovies } from "../../slice";
 
 function Main() {
     const location = useLocation()
+    const history = useHistory()
     const movies = useSelector(selectMovies)
     const [movie, setMovie] = useState(movies[0] || {})
 
@@ -17,9 +18,18 @@ function Main() {
                     'slug'
                 )
             )
-            selectedMovie && setMovie(selectedMovie)
+            if (selectedMovie) {
+                setMovie(selectedMovie)
+            } else {
+                history.push('/')
+                setMovie(movies[0])
+            }
         }
-    }, [movies, location.pathname])
+    }, [movies, location.pathname, history])
+
+    if (!movies.length) {
+        return 'There are no movies yet.'
+    }
 
     const { title, release, image, description } = movie
 

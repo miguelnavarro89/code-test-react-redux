@@ -1,17 +1,25 @@
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { selectMovies } from "../../slice";
+import { actions, selectMovies } from "../../slice";
 
 function Aside() {
     const movies = useSelector(selectMovies)
+    const dispatch = useDispatch()
     const onDelete = useCallback(
         (title) => () => {
-            window.confirm(`Are you sure to delete "${title}"?`)
+            const assured = window.confirm(`Are you sure to delete "${title}"?`)
+            if (assured) {
+                dispatch(actions.delete(title))
+            }
         },
-        [],
+        [dispatch],
     )
+
+    if (!movies.length) {
+        return null
+    }
     
     return (
         <div>
