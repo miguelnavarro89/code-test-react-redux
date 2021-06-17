@@ -1,6 +1,6 @@
 import { Grid, Button } from '@material-ui/core';
 import { map } from 'ramda';
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import styled from 'styled-components';
 import logo from '../../images/the-movies-db-logo.svg'
 
@@ -29,7 +29,10 @@ export default function Header () {
     return (
         <Wrapper>
             <Grid container justify='space-between' alignItems='center'>
-                    <LogoWrapper><span>The Movie DB</span> <img src={logo} alt='The Movies DB logo' width='120px' /></LogoWrapper>
+                    <LogoWrapper>
+                        <span>The Movie DB</span> 
+                        <Link to='/'><img src={logo} alt='The Movies DB logo' width='120px' /></Link>
+                    </LogoWrapper>
                     <Nav aria-label='Primary'>
                         <ul>{mapWithMenuItem(menu)}</ul>
                     </Nav>
