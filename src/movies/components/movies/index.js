@@ -1,20 +1,15 @@
 import { Button, Grid } from "@material-ui/core";
 import { always, cond, equals, T } from "ramda";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { fetchAll, selectStatus } from "../../slice";
+import { selectStatus } from "../../slice";
 import Aside from "./aside";
 import Main from "./main";
 
 function Movies() {
-    const dispatch = useDispatch()
     const status = useSelector(selectStatus)
-    
-    useEffect(() => {
-        dispatch(fetchAll())
-    }, [dispatch])
 
     return (
         <Grid container>

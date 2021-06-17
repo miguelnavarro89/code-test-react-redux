@@ -71,6 +71,7 @@ function AddMovie() {
                 dispatch(actions.add(values))
                 resetForm()
                 setSubmitting(false)
+                setImagePreview('')
                 alert(`New movie added: ${values.title}`)
             }}
         >
