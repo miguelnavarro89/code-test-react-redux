@@ -1,7 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import { values as objValues, complement, isEmpty } from 'ramda'
+import { values as objValues, complement, isEmpty, propSatisfies, equals } from 'ramda'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { actions, selectMovies } from '../slice'
 
 const urlRegExp = /[(http(s)?)://(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/i
 const dateRegExp = /^\d{2}\/\d{2}\/\d{4}$/i
@@ -9,6 +11,8 @@ const dateRegExp = /^\d{2}\/\d{2}\/\d{4}$/i
 function AddMovie() {
     const [imagePreview, setImagePreview] = useState()
     const isValidImagePreview = imagePreview && imagePreview !== 'invalid' && imagePreview !== 'error'
+    const dispatch = useDispatch()
+    const movies = useSelector(selectMovies)
 
     return (
         <Formik
@@ -24,6 +28,12 @@ function AddMovie() {
                     const message = (() => {
                         if (!value) {
                             return 'Required'
+                        }
+                        if (key === 'title') {
+                            const anyExistingRecord = movies.find(propSatisfies(equals(value), 'title'))
+                            if (anyExistingRecord) {
+                                return 'Title already exists'
+                            }
                         }
                         if (key === 'release') {
                             if (!dateRegExp.test(value)) {
@@ -56,8 +66,10 @@ function AddMovie() {
             }}
             onSubmit={(values, { setSubmitting }) => {
                 if (!isValidImagePreview) {
-                    setSubmitting(false)
+                    return setSubmitting(false)
                 }
+                
+                dispatch(actions.add(values))
             }}
         >
             {({
