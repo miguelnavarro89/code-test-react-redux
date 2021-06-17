@@ -1,5 +1,7 @@
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 import { selectMovies } from "../../slice";
 
 function Aside() {
@@ -17,7 +19,7 @@ function Aside() {
             <ul>
                 {movies.map(({ title, release, slug }) => (
                     <li key={slug}>
-                        <h3>{title}</h3>
+                        <h3><StyledNavLink to={`/${slug}`} activeClassName='active'>{title}</StyledNavLink></h3>
                         <span>{release}</span>
                         <button onClick={onDelete(title)}>Delete</button>
                     </li>
@@ -26,5 +28,11 @@ function Aside() {
         </div>
     );
 }
+
+const StyledNavLink = styled(NavLink)`
+    &.active {
+        color: var(--color-primary);
+    }
+`
 
 export default Aside;

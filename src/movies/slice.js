@@ -1,6 +1,6 @@
 import { compose, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ascend, descend, filter, path, pipe, prop, sort, sortBy, sortWith } from "ramda";
+import { descend, path, pipe, prop, sortWith } from "ramda";
 import { makeSlug } from "../utils";
 
 const initialState = {
@@ -30,10 +30,6 @@ export const selectMovies = pipe(
             )
         ),
     ])
-)
-export const selectMovie = compose(
-    // filter(),
-    selectMovies,
 )
 
 const { reducer, actions } = createSlice({
