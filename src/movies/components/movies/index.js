@@ -1,8 +1,5 @@
-import { Button, Grid } from "@material-ui/core";
 import { always, cond, equals, T } from "ramda";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { selectStatus } from "../../slice";
 import Aside from "./aside";
@@ -12,7 +9,7 @@ function Movies() {
     const status = useSelector(selectStatus)
 
     return (
-        <Grid container>
+        <Wrapper>
             {cond([
                 [equals('pending'), always('Loading...')],
                 [equals('failed'), always('An Error occurred, try later...')],
@@ -20,18 +17,19 @@ function Movies() {
                     <>
                         <Aside />
                         <Main />
-                        <AddLink to='/add'>
-                            <Button color='primary' role='none' tabIndex='-1'>
-                                Add new movie
-                            </Button>
-                        </AddLink>
                     </>
                 )],
             ])(status)}
-        </Grid>
+        </Wrapper>
     );
 }
-
-const AddLink = styled(Link)``
+const Wrapper = styled.div`
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    overflow-y: auto;
+    --webkit-overflow-scrolling: touch;
+`
 
 export default Movies;

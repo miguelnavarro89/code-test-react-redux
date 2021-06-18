@@ -1,4 +1,4 @@
-import { Grid, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { map } from 'ramda';
 import { NavLink, Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -28,29 +28,34 @@ const mapWithMenuItem = map(({ label, route }) =>
 export default function Header () {
     return (
         <Wrapper>
-            <Grid container justify='space-between' alignItems='center'>
-                    <LogoWrapper>
-                        <span>The Movie DB</span> 
-                        <Link to='/'><img src={logo} alt='The Movies DB logo' width='120px' /></Link>
-                    </LogoWrapper>
-                    <Nav aria-label='Primary'>
-                        <ul>{mapWithMenuItem(menu)}</ul>
-                    </Nav>
-            </Grid>
+            <LogoWrapper>
+                <span>The Movie DB</span> 
+                <Link to='/'><img src={logo} alt='The Movies DB logo' width='90px' /></Link>
+            </LogoWrapper>
+            <Nav aria-label='Primary'>
+                <ul>{mapWithMenuItem(menu)}</ul>
+            </Nav>
         </Wrapper>
     )
 }
 
-const Wrapper = styled.header``
+const Wrapper = styled.header`
+    padding: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
 
 const Nav = styled.nav`
     ul {
+        margin: 0;
         list-style: none;
         display: flex;
     }
 `
 
 const LogoWrapper = styled.h1`
+    margin: 0;
     > span {
         display: none;
     }

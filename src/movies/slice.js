@@ -1,6 +1,6 @@
 import { compose, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { complement, descend, equals, isEmpty, path, pipe, prop, propSatisfies, sortWith, unless } from "ramda";
+import { ascend, complement, descend, equals, isEmpty, path, pipe, prop, propSatisfies, sortWith, unless } from "ramda";
 import { getFromLocalStorage, makeSlug, saveToLocalStorage } from "../utils";
 
 const initialState = {
@@ -44,6 +44,9 @@ export const selectMovies = pipe(
                     prop('release'),
                 )
             ),
+            ascend(
+                prop('title')
+            )
         ])
     ),
 )

@@ -1,5 +1,6 @@
 html {
   --color-primary: #0DB5DE;
+  --color-bg-primary: #111;
 }
 
 body {
@@ -9,8 +10,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #111;
+  background-color: var(--color-bg-primary);
   color: white;
+  line-height: 1.38em;
 }
 
 a {
