@@ -25,6 +25,7 @@ function Movies() {
 }
 const Wrapper = styled.div`
     flex-grow: 1;
+    padding: 1em;
     width: 100%;
     display: flex;
     align-items: stretch;
