@@ -56,6 +56,7 @@ function Aside() {
 const Wrapper = styled.div`
     position: relative;
     width: 25%;
+    padding: 0 0 4em;
     background-color: var(--color-bg-aside, --color-bg-primary);
     overflow-y: auto;
     --webkit-overflow-scrolling: touch;
@@ -68,11 +69,12 @@ const Wrapper = styled.div`
 `
 
 const AddLink = styled(Link)`
-    position: absolute;
+    position: fixed;
     bottom: 1em;
     left: 1em;
     text-decoration: none;
     color: var(--color-primary);
+    background-color: var(--color-bg-primary);
 `
 
 const StyledNavLink = styled(NavLink)`

@@ -86,8 +86,8 @@ function AddMovie() {
                     handleBlur,
                     isSubmitting,
                 }) => {
-                    const anyError = objValues(errors).length
-                    const anyTouched = objValues(touched).length
+                    const anyError = !!objValues(errors).length
+                    const anyTouched = !!objValues(touched).length
                     const submitIsDisabled = isSubmitting || anyError || !anyTouched
 
                     return (
